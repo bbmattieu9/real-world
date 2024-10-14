@@ -16,18 +16,34 @@ const authFeature = createFeature({
     on(authActions?.register, (state) => ({
       ...state,
       isSubmitting: true,
-      validationErrors: null
+      validationErrors: null,
     })),
-    on(authActions?.registerSuccess , (state, action) => ({
-        ...state,
-        isSubmitting: false, 
-        currentUser: action.currentUser,
-      })),
-      on(authActions?.registerFailure , (state, action) => ({
-        ...state,
-        isSubmitting: false, 
-        validationErrors: action.errors,
-      }))
+    on(authActions?.registerSuccess, (state, action) => ({
+      ...state,
+      isSubmitting: false,
+      currentUser: action.currentUser,
+    })),
+    on(authActions?.registerFailure, (state, action) => ({
+      ...state,
+      isSubmitting: false,
+      validationErrors: action.errors,
+    })),
+
+    on(authActions?.login, (state) => ({
+      ...state,
+      isSubmitting: true,
+      validationErrors: null,
+    })),
+    on(authActions?.loginSuccess, (state, action) => ({
+      ...state,
+      isSubmitting: false,
+      currentUser: action.currentUser,
+    })),
+    on(authActions?.loginFailure, (state, action) => ({
+      ...state,
+      isSubmitting: false,
+      validationErrors: action.errors,
+    }))
   ),
 });
 
@@ -37,5 +53,5 @@ export const {
   selectIsSubmitting,
   selectIsLoading,
   selectCurrentUser,
-  selectValidationErrors 
+  selectValidationErrors,
 } = authFeature;
