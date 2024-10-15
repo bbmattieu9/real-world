@@ -8,12 +8,13 @@ import { environment } from '../../../environments/environment';
 import { LoginRequestInterface } from '../types/loginRequest.interface';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', 
 })
 export class AuthService {
   private readonly URL = environment.BASE_URL;
   private readonly REGISTER_USERS: string = 'users';
   private readonly LOGIN_USERS: string = 'users/login';
+  private readonly GET_CURRENT_USER: string = 'user';
 
   constructor(private _httpMessenger: HttpClient) {}
 
@@ -21,16 +22,21 @@ export class AuthService {
     return response.user;
   }
 
+  getCurrentUser(): Observable<CurrentUserInterface> {
+    return this._httpMessenger
+      .get<AuthResponseInterface>(`${this.URL}/${this.GET_CURRENT_USER}`)
+      .pipe(map(this.getUser));
+  }
 
   register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
     return this._httpMessenger
       .post<AuthResponseInterface>(`${this.URL}/${this.REGISTER_USERS}`, data)
-      .pipe(map(this.getUser))
+      .pipe(map(this.getUser));
   }
 
   login(data: LoginRequestInterface): Observable<CurrentUserInterface> {
     return this._httpMessenger
       .post<AuthResponseInterface>(`${this.URL}/${this.LOGIN_USERS}`, data)
-      .pipe(map(this.getUser))
+      .pipe(map(this.getUser));
   }
 }
