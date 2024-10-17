@@ -6,11 +6,13 @@ import { combineLatest } from 'rxjs';
 import { selectError, selectFeedData, selectIsLoading } from './store/reducer';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ErrorMessageComponent } from "../error-message/error-message.component";
+import { LoadingComponent } from "../loading/loading.component";
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ErrorMessageComponent, LoadingComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
