@@ -13,7 +13,7 @@ const feedFeature = createFeature({
   name: 'feed',
   reducer: createReducer(
     initialState,
-    on(feedActions.getFeed, (state) => ({ ...state, isLoading: false })),
+    on(feedActions.getFeed, (state) => ({ ...state, isLoading: true })),
     on(feedActions.getFeedSuccess, (state, action) => ({
       ...state,
       isLoading: false,

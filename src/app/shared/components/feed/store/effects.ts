@@ -1,10 +1,8 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { FeedService } from '../data-access/feed.service';
+import { DUMMY_FEED, FeedService } from '../data-access/feed.service';
 import { feedActions } from './actions';
 import { switchMap, of, map, catchError } from 'rxjs';
-import { authActions } from '../../../../auth/store/action';
-import { CurrentUserInterface } from '../../../types/currentUser.interface';
 import { GetFeedResponseInterface } from '../types/getFeedResponse.interface';
 
 export const getFeedEffect = createEffect(
@@ -17,7 +15,8 @@ export const getFeedEffect = createEffect(
             return feedActions.getFeedSuccess({ feed });
           }),
           catchError(() => {
-            return of(feedActions.getFeedFailure());
+            // return of(feedActions.getFeedFailure());
+            return of(feedActions.getFeedSuccess({ feed: DUMMY_FEED }));
           })
         );
       })
