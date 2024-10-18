@@ -9,6 +9,7 @@ import { ErrorMessageComponent } from "../error-message/error-message.component"
 import { LoadingComponent } from "../loading/loading.component";
 import { environment } from '../../../../environments/environment';
 import { PaginationComponent } from '../pagination/pagination.component';
+import queryString from 'query-string';
 
 @Component({
   selector: 'app-feed',
@@ -31,9 +32,26 @@ export class FeedComponent implements OnInit {
   constructor(private store: Store, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.store.dispatch(feedActions.getFeed({ url: this.apiUrl }));
+    
     this.route.queryParams.subscribe((params: Params) => {
       this.currentPage = Number(params['page'] || '1')
+      this.fetchFeed();
     })
+  }
+
+  fetchFeed():void {
+
+    const offset = this.currentPage * this.limit / this.limit;
+   
+    const parsedUrl = queryString.parseUrl(this.apiUrl);
+    const stringifiedParams = queryString.stringify({
+      limit: this.limit,
+      offset,
+      ...parsedUrl.query
+    })
+    console.log('[ __Offset__ ]:', offset, parsedUrl, stringifiedParams);
+    const apiWithParams = `${parsedUrl.url}?${stringifiedParams}`
+    this.store.dispatch(feedActions.getFeed({ url: apiWithParams }));
+
   }
 }
