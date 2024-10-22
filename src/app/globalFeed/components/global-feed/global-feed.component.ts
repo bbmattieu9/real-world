@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { BannerComponent } from '../../../shared/components/banner/banner.component';
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { PopularTagsComponent } from '../../../shared/components/popular-tags/popular-tags.component';
 
 @Component({
   selector: 'app-global-feed',
   standalone: true,
-  imports: [FeedComponent,BannerComponent, ErrorMessageComponent, LoadingComponent, CommonModule],
+  imports: [FeedComponent,BannerComponent, ErrorMessageComponent, LoadingComponent, PopularTagsComponent, CommonModule],
   templateUrl: './global-feed.component.html',
   styleUrl: './global-feed.component.scss'
 })

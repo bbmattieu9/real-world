@@ -1,0 +1,18 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <app-loading *ngIf="vm.isLoading"></app-loading>
+
+  <app-error-message *ngIf="vm.error" [message]="vm.error"></app-error-message>
+
+  <div *ngIf="vm.popularTags" class="sidebar">
+    <p>Popular Tags</p>
+
+    <div class="tag-list">
+      <a
+        class="tag-default tag-pill"
+        *ngFor="let popularTag of vm.popularTags"
+        [routerLink]="['/tags', popularTag]">
+        {{ popularTag }}
+      </a>
+    </div>
+  </div>
+</ng-container>

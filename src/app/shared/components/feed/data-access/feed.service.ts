@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { GetFeedResponseInterface } from '../types/getFeedResponse.interface';
 import { Observable, delay, of, tap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
+import { PopularTagType } from '../../../types/popularTag.type';
 
 export const DUMMY_FEED: GetFeedResponseInterface = {
   articles: [
@@ -82,6 +83,8 @@ export const DUMMY_FEED: GetFeedResponseInterface = {
   ],
   articleCount: 4,
 };
+
+
 
 @Injectable({
   providedIn: 'root',
