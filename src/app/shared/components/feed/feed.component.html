@@ -29,16 +29,16 @@
           {{ article.description }}
         </p>
         <span> Read more... </span>
-        Tag List
+        
+        <app-tag-list [tags]="article.tagList"></app-tag-list>
       </a>
     </div>
-    PAGINATION HERE
-
+    
     <app-pagination
       [total]="vm.feed.articleCount"
       [limit]="limit"
       [url]="baseUrl"
-      [currentPage]="currentPage"
-    ></app-pagination>
+      [currentPage]="currentPage">
+    </app-pagination>
   </div>
 </ng-container>
