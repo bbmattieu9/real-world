@@ -14,6 +14,12 @@ export const routes: Route[] = [
   },
 
   {
+    path: 'feed',
+    loadChildren: () =>
+      import('../app/your-feed/your-feed.routes').then((m) => m.YOUR_FEED_ROUTES),
+  },
+
+  {
     path: '',
     loadChildren: () =>
       import('../app/globalFeed/globalFeed.routes').then((m) => m.GLOBAL_FEED_ROUTES),
