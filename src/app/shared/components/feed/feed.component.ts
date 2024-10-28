@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { feedActions } from './store/actions';
 import { combineLatest } from 'rxjs';
 import { selectError, selectFeedData, selectIsLoading } from './store/reducer';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
-import { ErrorMessageComponent } from "../error-message/error-message.component";
-import { LoadingComponent } from "../loading/loading.component";
+import { ErrorMessageComponent } from '../error-message/error-message.component';
+import { LoadingComponent } from '../loading/loading.component';
 import { environment } from '../../../../environments/environment';
 import { PaginationComponent } from '../pagination/pagination.component';
 import queryString from 'query-string';
@@ -15,16 +15,18 @@ import { TagListComponent } from '../tag-list/tag-list.component';
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, 
-            RouterLink, 
-            ErrorMessageComponent, 
-            LoadingComponent, 
-            PaginationComponent,
-            TagListComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ErrorMessageComponent,
+    LoadingComponent,
+    PaginationComponent,
+    TagListComponent,
+  ],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, OnChanges {
   @Input() apiUrl: string = '';
   vm$ = combineLatest({
     isLoading: this.store.select(selectIsLoading),
@@ -35,29 +37,39 @@ export class FeedComponent implements OnInit {
   baseUrl = this.router.url.split('?')[0];
   currentPage: number = 0;
 
-  constructor(private store: Store, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    
     this.route.queryParams.subscribe((params: Params) => {
-      this.currentPage = Number(params['page'] || '1')
+      this.currentPage = Number(params['page'] || '1');
       this.fetchFeed();
-    })
+    });
   }
 
-  fetchFeed():void {
+  ngOnChanges(changes: SimpleChanges): void {
+    const isApiUrlChanged =
+      !changes['apiUrl'].firstChange &&
+      changes['apiUrl'].currentValue !== changes['apiUrl'].previousValue;
+      
+      if(isApiUrlChanged) {
+        this.fetchFeed();
+      }
+  }
 
-    const offset = this.currentPage * this.limit / this.limit;
-   
+  fetchFeed(): void {
+    const offset = (this.currentPage * this.limit) / this.limit;
     const parsedUrl = queryString.parseUrl(this.apiUrl);
     const stringifiedParams = queryString.stringify({
       limit: this.limit,
       offset,
-      ...parsedUrl.query
-    })
+      ...parsedUrl.query,
+    });
     console.log('[ __Offset__ ]:', offset, parsedUrl, stringifiedParams);
-    const apiWithParams = `${parsedUrl.url}?${stringifiedParams}`
+    const apiWithParams = `${parsedUrl.url}?${stringifiedParams}`;
     this.store.dispatch(feedActions.getFeed({ url: apiWithParams }));
-
   }
 }
