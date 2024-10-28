@@ -14,14 +14,20 @@ export const routes: Route[] = [
   },
 
   {
+    path: '',
+    loadChildren: () =>
+      import('../app/globalFeed/globalFeed.routes').then((m) => m.GLOBAL_FEED_ROUTES),
+  },
+
+  {
     path: 'feed',
     loadChildren: () =>
       import('../app/your-feed/your-feed.routes').then((m) => m.YOUR_FEED_ROUTES),
   },
 
   {
-    path: '',
+    path: 'tags/:slug',
     loadChildren: () =>
-      import('../app/globalFeed/globalFeed.routes').then((m) => m.GLOBAL_FEED_ROUTES),
+      import('../app/tag-feed/tag-feed.route').then((m) => m.TAG_FEED_ROUTES),
   },
 ];
