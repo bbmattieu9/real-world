@@ -10,9 +10,9 @@ import { FeedTogglerComponent } from '../../../shared/components/feed-toggler/fe
 @Component({
   selector: 'app-global-feed',
   standalone: true,
-  imports: [FeedComponent,BannerComponent, 
-            ErrorMessageComponent, 
-            LoadingComponent, 
+  imports: [FeedComponent,BannerComponent,
+            ErrorMessageComponent,
+            LoadingComponent,
             PopularTagsComponent,
             FeedTogglerComponent, 
             CommonModule],
