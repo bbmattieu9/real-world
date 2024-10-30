@@ -27,22 +27,25 @@ import { TagListComponent } from '../tag-list/tag-list.component';
   styleUrl: './feed.component.scss',
 })
 export class FeedComponent implements OnInit, OnChanges {
-  @Input() apiUrl: string = '';
-  vm$ = combineLatest({
-    isLoading: this.store.select(selectIsLoading),
-    error: this.store.select(selectError),
-    feed: this.store.select(selectFeedData),
-  });
-  limit = environment.limit;
-  baseUrl = this.router.url.split('?')[0];
-  currentPage: number = 0;
 
   constructor(
     private store: Store,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
+
+  @Input() apiUrl: string = '';
+  limit = environment.limit;
+  baseUrl = this.router.url.split('?')[0];
+  currentPage: number = 0;
+
+  vm$ = combineLatest({
+    isLoading: this.store.select(selectIsLoading),
+    error: this.store.select(selectError),
+    feed: this.store.select(selectFeedData),
+  });
+  
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       this.currentPage = Number(params['page'] || '1');
