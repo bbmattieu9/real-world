@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GetFeedResponseInterface } from '../types/getFeedResponse.interface';
-import { Observable, delay, of, tap } from 'rxjs';
-import { environment } from '../../../../../environments/environment';
+import { Observable, of, delay, tap, map } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { GetFeedResponseInterface } from '../components/feed/types/getFeedResponse.interface';
+import { ArticleInterface } from '../types/article.interface';
+import { ArticleResponseInterface } from '../types/articleResponse.interface';
 
 export const DUMMY_FEED: GetFeedResponseInterface = {
   articles: [
@@ -84,22 +86,26 @@ export const DUMMY_FEED: GetFeedResponseInterface = {
 };
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class FeedService {
+export class ArticleService {
+
   private readonly BASE_URL = environment.BASE_URL;
 
   constructor(private _httpMessenger: HttpClient) {}
 
-  getFeed(url: string): Observable<GetFeedResponseInterface> {
-    return this._httpMessenger.get<GetFeedResponseInterface>(`${this.BASE_URL}/${url}`);
-  }
-
-  // might not eventually need this
-  getAllFeed(): Observable<GetFeedResponseInterface> {
-    return of(DUMMY_FEED).pipe(
-      delay(2000),
-      tap(() => console.log('[ __Found Feed__]:', DUMMY_FEED))
+  getArticle(slug: string): Observable<ArticleInterface> {
+    const url = `${this.BASE_URL}/articles/${slug}`;
+    return this._httpMessenger.get<ArticleResponseInterface>(url).pipe(map((response) => response.article)
     );
   }
+
 }
+
+
+
+
+
+
+
+
