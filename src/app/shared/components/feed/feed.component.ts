@@ -32,7 +32,8 @@ export class FeedComponent implements OnInit, OnChanges {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {  }
+
 
 
   @Input() apiUrl: string = '';
@@ -76,3 +77,4 @@ export class FeedComponent implements OnInit, OnChanges {
     this.store.dispatch(feedActions.getFeed({ url: apiWithParams }));
   }
 }
+ 
