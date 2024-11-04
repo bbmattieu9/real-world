@@ -1,1 +1,27 @@
-<p>article works!</p>
+<ng-container *ngIf="vm$ | async as vm">
+<div class="article-page">
+    <div class="banner">
+        <div class="container" *ngIf="vm.article">
+            <h1>
+                {{vm.article.title}}
+            </h1>
+            <div class="article-meta">
+                <a [routerLink]="['/profiles', vm.article.author.username]">
+                    <img [src]="vm.article.author.image" alt="profile_img">
+                </a>
+                <div class="info">
+                    <a [routerLink]="['/profiles', vm.article.author.username]">
+                        {{ vm.article.author.username }}
+                    </a>
+                    <span class="data">
+                         {{ vm.article.author.username }}
+                    </span>
+                </div>
+                <span *ngIf="vm.isAuthor">
+                        <!-- put links for edit and delete here  -->
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+</ng-container>
