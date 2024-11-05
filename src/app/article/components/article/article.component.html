@@ -1,27 +1,52 @@
 <ng-container *ngIf="vm$ | async as vm">
-<div class="article-page">
+  <div class="article-page">
     <div class="banner">
-        <div class="container" *ngIf="vm.article">
-            <h1>
-                {{vm.article.title}}
-            </h1>
-            <div class="article-meta">
-                <a [routerLink]="['/profiles', vm.article.author.username]">
-                    <img [src]="vm.article.author.image" alt="profile_img">
-                </a>
-                <div class="info">
-                    <a [routerLink]="['/profiles', vm.article.author.username]">
-                        {{ vm.article.author.username }}
-                    </a>
-                    <span class="data">
-                         {{ vm.article.author.username }}
-                    </span>
+      <div class="container" *ngIf="vm.article">
+        <h1>
+          {{ vm.article.title }}
+        </h1>
+        <div class="article-meta">
+          <a [routerLink]="['/profiles', vm.article.author.username]">
+            <img [src]="vm.article.author.image" alt="profile_img" />
+          </a>
+          <div class="info">
+            <a [routerLink]="['/profiles', vm.article.author.username]">
+              {{ vm.article.author.username }}
+            </a>
+            <span class="data">
+              {{ vm.article.author.username }}
+            </span>
+          </div>
+          <span *ngIf="vm.isAuthor">
+            <!-- put links for edit and delete here  -->
+            <a
+              [routerLink]="['/articles', vm.article.slug, 'edit']"
+              routerLinkActive="router-link-active"
+              class="btn btn-outline-secondary btn-sm"
+            >
+              <i class="ion-edit"></i>
+              Edit Article
+            </a>
+            <button class="btn btn-outline-danger btn-sm">Delete Article</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- article section -->
+    <div class="container page">
+        <app-loading *ngIf="vm.isLoading"></app-loading>
+        <app-error-message *ngIf="vm.error"></app-error-message>
+
+        <div *ngIf="vm.article" class="row article-content">
+            <div class="col-xs-12">
+                <div>
+                    <p>{{ vm.article.body }}</p>
                 </div>
-                <span *ngIf="vm.isAuthor">
-                        <!-- put links for edit and delete here  -->
-                </span>
+
+                <app-tag-list [tags]="vm.article.tagList"></app-tag-list>
             </div>
         </div>
     </div>
-</div>
+  </div>
 </ng-container>

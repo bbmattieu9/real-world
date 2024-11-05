@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { articleActions } from '../../store/actions';
 import { combineLatest, filter, map } from 'rxjs';
@@ -7,11 +7,14 @@ import { selectArticleData, selectError, selectIsLoading } from '../../store/red
 import { selectCurrentUser } from '../../../auth/store/reducer';
 import { CurrentUserInterface } from '../../../shared/types/currentUser.interface';
 import { CommonModule } from '@angular/common';
+import { TagListComponent } from '../../../shared/components/tag-list/tag-list.component';
+import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-article',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TagListComponent, ErrorMessageComponent, LoadingComponent, RouterLink],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss',
 })
